@@ -24,10 +24,12 @@ struct WordCountResponse_
   typedef WordCountResponse_<ContainerAllocator> Type;
 
   WordCountResponse_()
-    : count(0)  {
+    : count(0)
+    , lcount(0)  {
     }
   WordCountResponse_(const ContainerAllocator& _alloc)
-    : count(0)  {
+    : count(0)
+    , lcount(0)  {
   (void)_alloc;
     }
 
@@ -35,6 +37,9 @@ struct WordCountResponse_
 
    typedef uint32_t _count_type;
   _count_type count;
+
+   typedef uint32_t _lcount_type;
+  _lcount_type lcount;
 
 
 
@@ -65,7 +70,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::basics::WordCountResponse_<ContainerAllocator1> & lhs, const ::basics::WordCountResponse_<ContainerAllocator2> & rhs)
 {
-  return lhs.count == rhs.count;
+  return lhs.count == rhs.count &&
+    lhs.lcount == rhs.lcount;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +128,12 @@ struct MD5Sum< ::basics::WordCountResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "ac8b22eb02c1f433e0a55ee9aac59a18";
+    return "1d9748b5a0adbd5ccfb4199b35279168";
   }
 
   static const char* value(const ::basics::WordCountResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xac8b22eb02c1f433ULL;
-  static const uint64_t static_value2 = 0xe0a55ee9aac59a18ULL;
+  static const uint64_t static_value1 = 0x1d9748b5a0adbd5cULL;
+  static const uint64_t static_value2 = 0xcfb4199b35279168ULL;
 };
 
 template<class ContainerAllocator>
@@ -147,6 +153,7 @@ struct Definition< ::basics::WordCountResponse_<ContainerAllocator> >
   static const char* value()
   {
     return "uint32 count\n"
+"uint32 lcount\n"
 "\n"
 ;
   }
@@ -167,6 +174,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.count);
+      stream.next(m.lcount);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -187,6 +195,8 @@ struct Printer< ::basics::WordCountResponse_<ContainerAllocator> >
   {
     s << indent << "count: ";
     Printer<uint32_t>::stream(s, indent + "  ", v.count);
+    s << indent << "lcount: ";
+    Printer<uint32_t>::stream(s, indent + "  ", v.lcount);
   }
 };
 

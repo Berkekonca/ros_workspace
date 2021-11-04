@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::basics::WordCount > {
   static const char* value()
   {
-    return "58903d21a3264f3408d79ba79e9f7c7e";
+    return "0aca46792d41ba55ec67f208cb09fa86";
   }
 
   static const char* value(const ::basics::WordCount&) { return value(); }
