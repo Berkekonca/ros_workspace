@@ -20,24 +20,31 @@
 
 (defclass basics::WordCountRequest
   :super ros::object
-  :slots (_words ))
+  :slots (_words _letters ))
 
 (defmethod basics::WordCountRequest
   (:init
    (&key
     ((:words __words) "")
+    ((:letters __letters) "")
     )
    (send-super :init)
    (setq _words (string __words))
+   (setq _letters (string __letters))
    self)
   (:words
    (&optional __words)
    (if __words (setq _words __words)) _words)
+  (:letters
+   (&optional __letters)
+   (if __letters (setq _letters __letters)) _letters)
   (:serialization-length
    ()
    (+
     ;; string _words
     4 (length _words)
+    ;; string _letters
+    4 (length _letters)
     ))
   (:serialize
    (&optional strm)
@@ -45,35 +52,46 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; string _words
        (write-long (length _words) s) (princ _words s)
+     ;; string _letters
+       (write-long (length _letters) s) (princ _letters s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
    ;; string _words
      (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _words (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
+   ;; string _letters
+     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _letters (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
    ;;
    self)
   )
 
 (defclass basics::WordCountResponse
   :super ros::object
-  :slots (_count ))
+  :slots (_count _letter_count ))
 
 (defmethod basics::WordCountResponse
   (:init
    (&key
     ((:count __count) 0)
+    ((:letter_count __letter_count) 0)
     )
    (send-super :init)
    (setq _count (round __count))
+   (setq _letter_count (round __letter_count))
    self)
   (:count
    (&optional __count)
    (if __count (setq _count __count)) _count)
+  (:letter_count
+   (&optional __letter_count)
+   (if __letter_count (setq _letter_count __letter_count)) _letter_count)
   (:serialization-length
    ()
    (+
     ;; uint32 _count
+    4
+    ;; uint32 _letter_count
     4
     ))
   (:serialize
@@ -82,12 +100,16 @@
               (make-string-output-stream (send self :serialization-length)))))
      ;; uint32 _count
        (write-long _count s)
+     ;; uint32 _letter_count
+       (write-long _letter_count s)
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
    ;; uint32 _count
      (setq _count (sys::peek buf ptr- :integer)) (incf ptr- 4)
+   ;; uint32 _letter_count
+     (setq _letter_count (sys::peek buf ptr- :integer)) (incf ptr- 4)
    ;;
    self)
   )
@@ -96,7 +118,7 @@
   :super ros::object
   :slots ())
 
-(setf (get basics::WordCount :md5sum-) "58903d21a3264f3408d79ba79e9f7c7e")
+(setf (get basics::WordCount :md5sum-) "41e2d0858b9ff4e641d23473ea11310c")
 (setf (get basics::WordCount :datatype-) "basics/WordCount")
 (setf (get basics::WordCount :request) basics::WordCountRequest)
 (setf (get basics::WordCount :response) basics::WordCountResponse)
@@ -104,26 +126,30 @@
 (defmethod basics::WordCountRequest
   (:response () (instance basics::WordCountResponse :init)))
 
-(setf (get basics::WordCountRequest :md5sum-) "58903d21a3264f3408d79ba79e9f7c7e")
+(setf (get basics::WordCountRequest :md5sum-) "41e2d0858b9ff4e641d23473ea11310c")
 (setf (get basics::WordCountRequest :datatype-) "basics/WordCountRequest")
 (setf (get basics::WordCountRequest :definition-)
       "string words
+string letters
 ---
 uint32 count
+uint32 letter_count
 
 ")
 
-(setf (get basics::WordCountResponse :md5sum-) "58903d21a3264f3408d79ba79e9f7c7e")
+(setf (get basics::WordCountResponse :md5sum-) "41e2d0858b9ff4e641d23473ea11310c")
 (setf (get basics::WordCountResponse :datatype-) "basics/WordCountResponse")
 (setf (get basics::WordCountResponse :definition-)
       "string words
+string letters
 ---
 uint32 count
+uint32 letter_count
 
 ")
 
 
 
-(provide :basics/WordCount "58903d21a3264f3408d79ba79e9f7c7e")
+(provide :basics/WordCount "41e2d0858b9ff4e641d23473ea11310c")
 
 

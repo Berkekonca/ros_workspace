@@ -15,7 +15,10 @@ word_counter = rospy.ServiceProxy('word_count', WordCount)
 
 words = ' '.join(sys.argv[1:])
 
-word_count = word_counter(words)
+letters = ' '.join(sys.argv[1:])
 
-print words, '->', word_count.count
+word_count = word_counter(words,letters)
+
+print words, '|  word count: ->', word_count.count
+print letters,'|letter count: ->', word_count.letter_count
 

@@ -5,6 +5,7 @@ import rospy
 
 import time
 import actionlib
+import sys
 from basics.msg import TimerAction, TimerGoal, TimerResult, TimerFeedback
 
 # BEGIN PART_1
@@ -17,8 +18,10 @@ rospy.init_node('timer_action_client')
 client = actionlib.SimpleActionClient('timer', TimerAction)
 client.wait_for_server()
 
+goal_time = sys.argv[1]
+
 goal = TimerGoal()
-goal.time_to_wait = rospy.Duration.from_sec(5.0)
+goal.time_to_wait = rospy.Duration.from_sec(float(goal_time))
 # BEGIN PART_5
 # Uncomment this line to test server-side abort:
 #goal.time_to_wait = rospy.Duration.from_sec(500.0)

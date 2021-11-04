@@ -25,11 +25,11 @@ struct WordCountResponse_
 
   WordCountResponse_()
     : count(0)
-    , lcount(0)  {
+    , letter_count(0)  {
     }
   WordCountResponse_(const ContainerAllocator& _alloc)
     : count(0)
-    , lcount(0)  {
+    , letter_count(0)  {
   (void)_alloc;
     }
 
@@ -38,8 +38,8 @@ struct WordCountResponse_
    typedef uint32_t _count_type;
   _count_type count;
 
-   typedef uint32_t _lcount_type;
-  _lcount_type lcount;
+   typedef uint32_t _letter_count_type;
+  _letter_count_type letter_count;
 
 
 
@@ -71,7 +71,7 @@ template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::basics::WordCountResponse_<ContainerAllocator1> & lhs, const ::basics::WordCountResponse_<ContainerAllocator2> & rhs)
 {
   return lhs.count == rhs.count &&
-    lhs.lcount == rhs.lcount;
+    lhs.letter_count == rhs.letter_count;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -128,12 +128,12 @@ struct MD5Sum< ::basics::WordCountResponse_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "1d9748b5a0adbd5ccfb4199b35279168";
+    return "61faee6a9c59ea72fb3da3e958655cd6";
   }
 
   static const char* value(const ::basics::WordCountResponse_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x1d9748b5a0adbd5cULL;
-  static const uint64_t static_value2 = 0xcfb4199b35279168ULL;
+  static const uint64_t static_value1 = 0x61faee6a9c59ea72ULL;
+  static const uint64_t static_value2 = 0xfb3da3e958655cd6ULL;
 };
 
 template<class ContainerAllocator>
@@ -153,7 +153,7 @@ struct Definition< ::basics::WordCountResponse_<ContainerAllocator> >
   static const char* value()
   {
     return "uint32 count\n"
-"uint32 lcount\n"
+"uint32 letter_count\n"
 "\n"
 ;
   }
@@ -174,7 +174,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.count);
-      stream.next(m.lcount);
+      stream.next(m.letter_count);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -195,8 +195,8 @@ struct Printer< ::basics::WordCountResponse_<ContainerAllocator> >
   {
     s << indent << "count: ";
     Printer<uint32_t>::stream(s, indent + "  ", v.count);
-    s << indent << "lcount: ";
-    Printer<uint32_t>::stream(s, indent + "  ", v.lcount);
+    s << indent << "letter_count: ";
+    Printer<uint32_t>::stream(s, indent + "  ", v.letter_count);
   }
 };
 

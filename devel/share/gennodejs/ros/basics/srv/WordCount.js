@@ -22,6 +22,7 @@ class WordCountRequest {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.words = null;
+      this.letters = null;
     }
     else {
       if (initObj.hasOwnProperty('words')) {
@@ -30,6 +31,12 @@ class WordCountRequest {
       else {
         this.words = '';
       }
+      if (initObj.hasOwnProperty('letters')) {
+        this.letters = initObj.letters
+      }
+      else {
+        this.letters = '';
+      }
     }
   }
 
@@ -37,6 +44,8 @@ class WordCountRequest {
     // Serializes a message object of type WordCountRequest
     // Serialize message field [words]
     bufferOffset = _serializer.string(obj.words, buffer, bufferOffset);
+    // Serialize message field [letters]
+    bufferOffset = _serializer.string(obj.letters, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -46,13 +55,16 @@ class WordCountRequest {
     let data = new WordCountRequest(null);
     // Deserialize message field [words]
     data.words = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [letters]
+    data.letters = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += object.words.length;
-    return length + 4;
+    length += object.letters.length;
+    return length + 8;
   }
 
   static datatype() {
@@ -62,13 +74,14 @@ class WordCountRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '6f897d3845272d18053a750c1cfb862a';
+    return '0f4e7e1911ac32d59dbf586fb6aa5ac8';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     string words
+    string letters
     
     `;
   }
@@ -86,6 +99,13 @@ class WordCountRequest {
       resolved.words = ''
     }
 
+    if (msg.letters !== undefined) {
+      resolved.letters = msg.letters;
+    }
+    else {
+      resolved.letters = ''
+    }
+
     return resolved;
     }
 };
@@ -95,6 +115,7 @@ class WordCountResponse {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.count = null;
+      this.letter_count = null;
     }
     else {
       if (initObj.hasOwnProperty('count')) {
@@ -103,6 +124,12 @@ class WordCountResponse {
       else {
         this.count = 0;
       }
+      if (initObj.hasOwnProperty('letter_count')) {
+        this.letter_count = initObj.letter_count
+      }
+      else {
+        this.letter_count = 0;
+      }
     }
   }
 
@@ -110,6 +137,8 @@ class WordCountResponse {
     // Serializes a message object of type WordCountResponse
     // Serialize message field [count]
     bufferOffset = _serializer.uint32(obj.count, buffer, bufferOffset);
+    // Serialize message field [letter_count]
+    bufferOffset = _serializer.uint32(obj.letter_count, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -119,11 +148,13 @@ class WordCountResponse {
     let data = new WordCountResponse(null);
     // Deserialize message field [count]
     data.count = _deserializer.uint32(buffer, bufferOffset);
+    // Deserialize message field [letter_count]
+    data.letter_count = _deserializer.uint32(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    return 4;
+    return 8;
   }
 
   static datatype() {
@@ -133,13 +164,14 @@ class WordCountResponse {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return 'ac8b22eb02c1f433e0a55ee9aac59a18';
+    return '61faee6a9c59ea72fb3da3e958655cd6';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
     uint32 count
+    uint32 letter_count
     
     
     `;
@@ -158,6 +190,13 @@ class WordCountResponse {
       resolved.count = 0
     }
 
+    if (msg.letter_count !== undefined) {
+      resolved.letter_count = msg.letter_count;
+    }
+    else {
+      resolved.letter_count = 0
+    }
+
     return resolved;
     }
 };
@@ -165,6 +204,6 @@ class WordCountResponse {
 module.exports = {
   Request: WordCountRequest,
   Response: WordCountResponse,
-  md5sum() { return '58903d21a3264f3408d79ba79e9f7c7e'; },
+  md5sum() { return '41e2d0858b9ff4e641d23473ea11310c'; },
   datatype() { return 'basics/WordCount'; }
 };

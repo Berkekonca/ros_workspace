@@ -24,10 +24,12 @@ struct WordCountRequest_
   typedef WordCountRequest_<ContainerAllocator> Type;
 
   WordCountRequest_()
-    : words()  {
+    : words()
+    , letters()  {
     }
   WordCountRequest_(const ContainerAllocator& _alloc)
-    : words(_alloc)  {
+    : words(_alloc)
+    , letters(_alloc)  {
   (void)_alloc;
     }
 
@@ -35,6 +37,9 @@ struct WordCountRequest_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _words_type;
   _words_type words;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _letters_type;
+  _letters_type letters;
 
 
 
@@ -65,7 +70,8 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::basics::WordCountRequest_<ContainerAllocator1> & lhs, const ::basics::WordCountRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.words == rhs.words;
+  return lhs.words == rhs.words &&
+    lhs.letters == rhs.letters;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -122,12 +128,12 @@ struct MD5Sum< ::basics::WordCountRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "6f897d3845272d18053a750c1cfb862a";
+    return "0f4e7e1911ac32d59dbf586fb6aa5ac8";
   }
 
   static const char* value(const ::basics::WordCountRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x6f897d3845272d18ULL;
-  static const uint64_t static_value2 = 0x053a750c1cfb862aULL;
+  static const uint64_t static_value1 = 0x0f4e7e1911ac32d5ULL;
+  static const uint64_t static_value2 = 0x9dbf586fb6aa5ac8ULL;
 };
 
 template<class ContainerAllocator>
@@ -147,6 +153,7 @@ struct Definition< ::basics::WordCountRequest_<ContainerAllocator> >
   static const char* value()
   {
     return "string words\n"
+"string letters\n"
 ;
   }
 
@@ -166,6 +173,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.words);
+      stream.next(m.letters);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -186,6 +194,8 @@ struct Printer< ::basics::WordCountRequest_<ContainerAllocator> >
   {
     s << indent << "words: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.words);
+    s << indent << "letters: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.letters);
   }
 };
 

@@ -6,7 +6,9 @@ from basics.srv import WordCount,WordCountResponse
 
 
 def count_words(request):
-    return WordCountResponse(len(request.words.split()))
+    out1 = (len(request.words.split()))
+    out2 = (len(request.words.replace(" ","")))
+    return WordCountResponse(out1,out2)
 
 
 rospy.init_node('service_server')

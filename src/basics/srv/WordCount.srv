@@ -1,4 +1,5 @@
 string words
+string letters
 ---
 uint32 count
-uint32 lcount
+uint32 letter_count

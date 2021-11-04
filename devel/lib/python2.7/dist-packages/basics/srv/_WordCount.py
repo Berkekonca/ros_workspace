@@ -8,13 +8,14 @@ import struct
 
 
 class WordCountRequest(genpy.Message):
-  _md5sum = "6f897d3845272d18053a750c1cfb862a"
+  _md5sum = "0f4e7e1911ac32d59dbf586fb6aa5ac8"
   _type = "basics/WordCountRequest"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """string words
+string letters
 """
-  __slots__ = ['words']
-  _slot_types = ['string']
+  __slots__ = ['words','letters']
+  _slot_types = ['string','string']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +25,7 @@ class WordCountRequest(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       words
+       words,letters
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,8 +36,11 @@ class WordCountRequest(genpy.Message):
       # message fields cannot be None, assign default values for those that are
       if self.words is None:
         self.words = ''
+      if self.letters is None:
+        self.letters = ''
     else:
       self.words = ''
+      self.letters = ''
 
   def _get_types(self):
     """
@@ -51,6 +55,12 @@ class WordCountRequest(genpy.Message):
     """
     try:
       _x = self.words
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.letters
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -77,6 +87,15 @@ class WordCountRequest(genpy.Message):
         self.words = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.words = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.letters = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.letters = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -90,6 +109,12 @@ class WordCountRequest(genpy.Message):
     """
     try:
       _x = self.words
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.letters
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -117,6 +142,15 @@ class WordCountRequest(genpy.Message):
         self.words = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.words = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.letters = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.letters = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -135,14 +169,15 @@ import struct
 
 
 class WordCountResponse(genpy.Message):
-  _md5sum = "ac8b22eb02c1f433e0a55ee9aac59a18"
+  _md5sum = "61faee6a9c59ea72fb3da3e958655cd6"
   _type = "basics/WordCountResponse"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """uint32 count
+uint32 letter_count
 
 """
-  __slots__ = ['count']
-  _slot_types = ['uint32']
+  __slots__ = ['count','letter_count']
+  _slot_types = ['uint32','uint32']
 
   def __init__(self, *args, **kwds):
     """
@@ -152,7 +187,7 @@ class WordCountResponse(genpy.Message):
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       count
+       count,letter_count
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -163,8 +198,11 @@ class WordCountResponse(genpy.Message):
       # message fields cannot be None, assign default values for those that are
       if self.count is None:
         self.count = 0
+      if self.letter_count is None:
+        self.letter_count = 0
     else:
       self.count = 0
+      self.letter_count = 0
 
   def _get_types(self):
     """
@@ -178,8 +216,8 @@ class WordCountResponse(genpy.Message):
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.count
-      buff.write(_get_struct_I().pack(_x))
+      _x = self
+      buff.write(_get_struct_2I().pack(_x.count, _x.letter_count))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -192,9 +230,10 @@ class WordCountResponse(genpy.Message):
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
+      _x = self
       start = end
-      end += 4
-      (self.count,) = _get_struct_I().unpack(str[start:end])
+      end += 8
+      (_x.count, _x.letter_count,) = _get_struct_2I().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -207,8 +246,8 @@ class WordCountResponse(genpy.Message):
     :param numpy: numpy python module
     """
     try:
-      _x = self.count
-      buff.write(_get_struct_I().pack(_x))
+      _x = self
+      buff.write(_get_struct_2I().pack(_x.count, _x.letter_count))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -222,9 +261,10 @@ class WordCountResponse(genpy.Message):
       codecs.lookup_error("rosmsg").msg_type = self._type
     try:
       end = 0
+      _x = self
       start = end
-      end += 4
-      (self.count,) = _get_struct_I().unpack(str[start:end])
+      end += 8
+      (_x.count, _x.letter_count,) = _get_struct_2I().unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -233,8 +273,14 @@ _struct_I = genpy.struct_I
 def _get_struct_I():
     global _struct_I
     return _struct_I
+_struct_2I = None
+def _get_struct_2I():
+    global _struct_2I
+    if _struct_2I is None:
+        _struct_2I = struct.Struct("<2I")
+    return _struct_2I
 class WordCount(object):
   _type          = 'basics/WordCount'
-  _md5sum = '58903d21a3264f3408d79ba79e9f7c7e'
+  _md5sum = '41e2d0858b9ff4e641d23473ea11310c'
   _request_class  = WordCountRequest
   _response_class = WordCountResponse
