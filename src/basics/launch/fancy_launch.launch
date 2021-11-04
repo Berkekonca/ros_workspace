@@ -7,4 +7,11 @@ type="fancy_action_server.py" />
 type="fancy_action_client.py"
 
 	 args="10" output="screen"/>
+
+<node name="lab4_topic_publisher" pkg="basics"
+type="topic_publisher.py" />
+
+<node name="lab4_topic_subscriber" pkg="basics"
+type="topic_subscriber.py" />
+
 </launch>
