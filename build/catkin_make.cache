@@ -1,2 +1,2 @@
-basics
+basics:rosbot_bath
 -DCATKIN_DEVEL_PREFIX=/home/saykay/ros_workspace/devel -DCMAKE_INSTALL_PREFIX=/home/saykay/ros_workspace/install -G Unix Makefiles

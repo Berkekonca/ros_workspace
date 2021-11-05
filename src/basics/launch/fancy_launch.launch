@@ -1,5 +1,7 @@
 <launch>
 
+<remap from="timer" to="lab4/timer" />
+
 <node name="lab4_action_server" pkg="basics"
 type="fancy_action_server.py" />
 
