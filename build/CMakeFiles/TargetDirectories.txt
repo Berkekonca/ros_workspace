@@ -82,6 +82,15 @@
 /home/saykay/ros_workspace/build/basics/CMakeFiles/basics_geneus.dir
 /home/saykay/ros_workspace/build/basics/CMakeFiles/basics_generate_messages_lisp.dir
 /home/saykay/ros_workspace/build/basics/CMakeFiles/basics_genlisp.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/install/strip.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/tutorial_subscriber_node.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/rebuild_cache.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/install.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/tutorial_pkg_node.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/install/local.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/test.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/list_install_components.dir
+/home/saykay/ros_workspace/build/tutorial_pkg/CMakeFiles/edit_cache.dir
 /home/saykay/ros_workspace/build/rosbot_bath/CMakeFiles/imu_controller_node.dir
 /home/saykay/ros_workspace/build/rosbot_bath/CMakeFiles/tf2_msgs_generate_messages_lisp.dir
 /home/saykay/ros_workspace/build/rosbot_bath/CMakeFiles/install/strip.dir

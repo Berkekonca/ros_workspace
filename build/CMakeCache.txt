@@ -435,6 +435,12 @@ tf2_ros_DIR:PATH=/opt/ros/melodic/share/tf2_ros/cmake
 //The directory containing a CMake configuration file for tf.
 tf_DIR:PATH=/opt/ros/melodic/share/tf/cmake
 
+//Value Computed by CMake
+tutorial_pkg_BINARY_DIR:STATIC=/home/saykay/ros_workspace/build/tutorial_pkg
+
+//Value Computed by CMake
+tutorial_pkg_SOURCE_DIR:STATIC=/home/saykay/ros_workspace/src/tutorial_pkg
+
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/melodic/share/xmlrpcpp/cmake
 
@@ -548,7 +554,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=7
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
