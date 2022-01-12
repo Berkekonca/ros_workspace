@@ -6,13 +6,15 @@
 
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find rosbot_bath)/urdf/rosbot.xacro'"/>
 
-  <node name="rosbot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rosbot" />
+  <node name="rosbot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rosbot -x 9.5 -y 0 -z 0 -R 0 -P 0 -Y 3.14" />
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
   <node name="imu_controller_node" pkg="rosbot_bath" type="imu_controller_node"/>
 
+  <node name="bot_controller_node" pkg="rosbot_bath" type="bot_controller.py"/>
+
   <arg name="world" default="$(find rosbot_bath)/worlds/2021_assessment.world"/>
-  <arg name="paused" default="false"/>
+  <arg name="paused" default="true"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
