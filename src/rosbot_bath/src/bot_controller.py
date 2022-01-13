@@ -38,9 +38,9 @@ def scan_callback(msg):
   back_right = min(msg.ranges[361:427])
   left = min(msg.ranges[136:224])
   right = min(msg.ranges[496:584])
- # rospy.loginfo("front left: " + str(front_left))
-  #rospy.loginfo("front right: " + str(front_right))
- # rospy.loginfo("left: " + str(left))
+#  rospy.loginfo("front left: " + str(front_left))
+#  rospy.loginfo("front right: " + str(front_right))
+#  rospy.loginfo("left: " + str(left))
 #  rospy.loginfo("right: " + str(right))
 #  rospy.loginfo(msg.ranges[])
 
@@ -69,7 +69,7 @@ def imu_callback(msg):
   z_pose = msg.orientation.z
 #  rospy.loginfo("z_pose: %s",str(z_pose))
 
-# Object Detecting
+# Object Detection
 def is_fl_empty(dist):
   if front_left < dist or range_fl < dist:
     return False
