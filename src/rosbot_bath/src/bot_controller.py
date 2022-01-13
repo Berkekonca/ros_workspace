@@ -18,6 +18,8 @@ front_left = None
 front_right = None
 back_left = None
 back_right = None
+left = None
+right = None
 range_fr = None
 range_fl = None
 range_rr = None
@@ -29,13 +31,17 @@ rospy.init_node('controller_node')
 
 # callbacks
 def scan_callback(msg):
-  global front_left, front_right, back_left, back_right
+  global front_left, front_right, back_left, back_right, left, right
   front_left = min(msg.ranges[0:66])
   front_right = min(msg.ranges[653:719])
   back_left = min(msg.ranges[293:359])
   back_right = min(msg.ranges[361:427])
-  rospy.loginfo("front left: " + str(front_left))
-  rospy.loginfo("front right: " + str(front_right))
+  left = min(msg.ranges[136:224])
+  right = min(msg.ranges[496:584])
+ # rospy.loginfo("front left: " + str(front_left))
+  #rospy.loginfo("front right: " + str(front_right))
+ # rospy.loginfo("left: " + str(left))
+#  rospy.loginfo("right: " + str(right))
 #  rospy.loginfo(msg.ranges[])
 
 def range_fr_callback(msg):
@@ -64,26 +70,38 @@ def imu_callback(msg):
 #  rospy.loginfo("z_pose: %s",str(z_pose))
 
 # Object Detecting
-def is_fl_empty():
-  if front_left < 0.3 or range_fl < 0.3:
+def is_fl_empty(dist):
+  if front_left < dist or range_fl < dist:
     return False
   else:
     return True
 
-def is_fr_empty():
-  if front_right < 0.3 or range_fr < 0.3:
+def is_fr_empty(dist):
+  if front_right < dist or range_fr < dist:
     return False
   else:
     return True
 
-def is_rl_empty():
-  if front_left < 0.3 or range_rl < 0.3:
+def is_rl_empty(dist):
+  if back_left < dist or range_rl < dist:
     return False
   else:
     return True
 
-def is_rr_empty():
-  if front_left < 0.3 or range_rr < 0.3:
+def is_rr_empty(dist):
+  if back_left < dist or range_rr < dist:
+    return False
+  else:
+    return True
+
+def is_left_empty(dist):
+  if left < dist:
+    return False
+  else:
+    return True
+
+def is_right_empty(dist):
+  if right < dist:
     return False
   else:
     return True
@@ -93,6 +111,12 @@ def is_correct_orientation():
     return False
   else:
     return True
+
+def nothing_around(dist):
+  if is_right_empty(dist) and is_left_empty(dist) and is_rl_empty(dist) and is_rr_empty(dist):
+    return True
+  else:
+    return False
 
 # Actions
 def turn_left(vel_msg):
@@ -111,19 +135,27 @@ def go_back(vel_msg):
   vel_msg.linear.x = -0.25
   vel_msg.angular.z = 0
 
+def orient(vel_msg):
+  if z_pose < -0.055:
+    vel_msg.linear.x = 0
+    vel_msg.angular.z = 0.5
+  elif z_pose > 0.055:
+    vel_msg.linear.x = 0
+    vel_msg.angular.z = -0.5
 
 # Object avoidance
 def navigate(vel_msg,initial_pose):
-  if is_fl_empty() and is_fr_empty():
-    go_straigt(vel_msg)
-  elif not is_fl_empty():
+  detection_range = 0.3
+  detection_range2 = 0.6
+  if is_fl_empty(detection_range) and is_fr_empty(detection_range):
+    if nothing_around(detection_range2) and not is_correct_orientation():
+      orient(vel_msg)
+    else:
+      go_straigt(vel_msg)
+  elif not is_fl_empty(detection_range):
     turn_right(vel_msg)
-  elif not is_fr_empty():
+  elif not is_fr_empty(detection_range):
     turn_left(vel_msg)
-#  elif not is_correct_orientation():
-#    turn_left(vel_msg)
-
-
   return vel_msg
 
 # subscribing
@@ -145,7 +177,7 @@ vel_msg.linear.y = 0
 vel_msg.linear.z = 0
 vel_msg.angular.x = 0
 vel_msg.angular.y = 0
-vel_msg.angular.z = 0.5
+vel_msg.angular.z = 0
 
 # Rate
 rate = rospy.Rate(10)
