@@ -38,36 +38,37 @@ def scan_callback(msg):
   back_right = min(msg.ranges[361:427])
   left = min(msg.ranges[136:224])
   right = min(msg.ranges[496:584])
-#  rospy.loginfo("front left: " + str(front_left))
-#  rospy.loginfo("front right: " + str(front_right))
-#  rospy.loginfo("left: " + str(left))
-#  rospy.loginfo("right: " + str(right))
-#  rospy.loginfo(msg.ranges[])
+  rospy.loginfo("lidar| front left: " + str(front_left))
+  rospy.loginfo("lidar| front right: " + str(front_right))
+  rospy.loginfo("lidar| left: " + str(left))
+  rospy.loginfo("lidar| right: " + str(right))
+  rospy.loginfo("lidar| back left: " + str(back_left))
+rospy.loginfo("lidar| back right: " + str(back_right))
 
 def range_fr_callback(msg):
   global range_fr
   range_fr = msg.range
-#  rospy.loginfo("range_fr: %s",str(range_fr))
+  rospy.loginfo("range_fr: %s",str(range_fr))
 
 def range_fl_callback(msg):
   global range_fl
   range_fl = msg.range
-#  rospy.loginfo("range_fl: %s",str(range_fl))
+  rospy.loginfo("range_fl: %s",str(range_fl))
 
 def range_rr_callback(msg):
   global range_rr
   range_rr = msg.range
-#  rospy.loginfo("range_rr: %s",str(range_rr))
+  rospy.loginfo("range_rr: %s",str(range_rr))
 
 def range_rl_callback(msg):
   global range_rl
   range_rl = msg.range
-#  rospy.loginfo("range_rl: %s",str(range_rl))
+  rospy.loginfo("range_rl: %s",str(range_rl))
 
 def imu_callback(msg):
   global z_pose
   z_pose = msg.orientation.z
-#  rospy.loginfo("z_pose: %s",str(z_pose))
+  rospy.loginfo("z_pose: %s",str(z_pose))
 
 # Object Detection
 def is_fl_empty(dist):
@@ -144,7 +145,7 @@ def orient(vel_msg):
     vel_msg.angular.z = -0.5
 
 # Object avoidance
-def navigate(vel_msg,initial_pose):
+def navigate(vel_msg):
   detection_range = 0.3
   detection_range2 = 0.6
   if is_fl_empty(detection_range) and is_fr_empty(detection_range):
@@ -189,7 +190,7 @@ rate2.sleep()
 initial_pose = z_pose
 
 while not rospy.is_shutdown():
-	vel_pub.publish(navigate(vel_msg,initial_pose))
+	vel_pub.publish(navigate(vel_msg))
 #        vel_pub.publish(vel_msg)
 # 	print(z_pose)
 	rate.sleep()
